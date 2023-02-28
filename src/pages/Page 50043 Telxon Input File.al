@@ -6,6 +6,7 @@ Page 50043 "Telxon Input File"
     PageType = Worksheet;
     SaveValues = true;
     SourceTable = "Telxon Input File";
+    UsageCategory = Lists;
     SourceTableView = sorting(Processed, "Batch Name", Sequence)
                       order(ascending)
                       where(Processed = filter(False));
