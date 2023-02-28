@@ -8,7 +8,7 @@ Page 50000 "Shipping Instructions"
     {
         area(content)
         {
-            repeater(Control1)
+            repeater(Control1) //test
             {
                 field("Code"; Rec.Code)
                 {
