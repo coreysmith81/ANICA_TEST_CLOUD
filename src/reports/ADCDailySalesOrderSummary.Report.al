@@ -5,85 +5,85 @@ Report 50045 "ADC Daily Sales Order Summary"
 
     dataset
     {
-        dataitem("Sales Header";"Sales Header")
+        dataitem("Sales Header"; "Sales Header")
         {
-            DataItemTableView = sorting("Document Type","Sell-to Customer No.","No.") order(ascending) where("Document Type"=filter(Order),"Location Code"=filter('ADC'));
-            RequestFilterFields = "Document Date","No. Printed","Location Code",Approved,"No.","Shipping Instruction Code";
+            DataItemTableView = sorting("Document Type", "Sell-to Customer No.", "No.") order(ascending) where("Document Type" = filter(Order), "Location Code" = filter('ADC'));
+            RequestFilterFields = "Document Date", "No. Printed", "Location Code", Approved, "No.", "Shipping Instruction Code";
             column(ReportForNavId_6640; 6640)
             {
             }
-            column(CurrReport_PAGENO;CurrReport.PageNo)
+            column(CurrReport_PAGENO; CurrReport.PageNo)
             {
             }
-            column(Sales_Header__No__;"No.")
+            column(Sales_Header__No__; "No.")
             {
             }
-            column(Sales_Header__Bill_to_Name_;"Bill-to Name")
+            column(Sales_Header__Bill_to_Name_; "Bill-to Name")
             {
             }
-            column(PrintPick;PrintPick)
+            column(PrintPick; PrintPick)
             {
             }
-            column(Sales_Header_Amount;Amount)
+            column(Sales_Header_Amount; Amount)
             {
             }
-            column(Sales_Header__Document_Date_;"Document Date")
+            column(Sales_Header__Document_Date_; "Document Date")
             {
             }
-            column(PDropShip;PDropShip)
+            column(PDropShip; PDropShip)
             {
             }
-            column(PReleased;PReleased)
+            column(PReleased; PReleased)
             {
             }
-            column(POVendor;POVendor)
+            column(POVendor; POVendor)
             {
             }
-            column(Sales_Header__Shipping_Instruction_Code_;"Shipping Instruction Code")
+            column(Sales_Header__Shipping_Instruction_Code_; "Shipping Instruction Code")
             {
             }
-            column(PVendType;PVendType)
+            column(PVendType; PVendType)
             {
                 OptionMembers = " ",Budget,Grocery,JBG,OMC,Polaris,Skidoo,Warehouse,"Yakima ",Breakout;
             }
-            column(POReleased;POReleased)
+            column(POReleased; POReleased)
             {
             }
-            column(TOrderWeight;TOrderWeight)
+            column(TOrderWeight; TOrderWeight)
             {
             }
-            column(PVendName;PVendName)
+            column(PVendName; PVendName)
             {
             }
-            column(PPurchOrder;PPurchOrder)
+            column(PPurchOrder; PPurchOrder)
             {
             }
-            column(Pconfirm;Pconfirm)
+            column(Pconfirm; Pconfirm)
             {
                 OptionMembers = " ",Phone,Fax,EDI,Special;
             }
-            column(Sales_Header__Sales_Order_Type_;"Sales Order Type")
+            column(Sales_Header__Sales_Order_Type_; "Sales Order Type")
             {
             }
-            column(VDestCde;VDestCde)
+            column(VDestCde; VDestCde)
             {
             }
-            column(VOrderAmt;VOrderAmt)
+            column(VOrderAmt; VOrderAmt)
             {
             }
-            column(VOrderWt;VOrderWt)
+            column(VOrderWt; VOrderWt)
             {
             }
-            column(TotalAmt;TotalAmt)
+            column(TotalAmt; TotalAmt)
             {
             }
-            column(TotalWeight;TotalWeight)
+            column(TotalWeight; TotalWeight)
             {
             }
-            column(Sales_Header_Document_Type;"Document Type")
+            column(Sales_Header_Document_Type; "Document Type")
             {
             }
-            column(Sales_Header_Sell_to_Customer_No_;"Sell-to Customer No.")
+            column(Sales_Header_Sell_to_Customer_No_; "Sell-to Customer No.")
             {
             }
 
@@ -99,108 +99,105 @@ Report 50045 "ADC Daily Sales Order Summary"
                 PVendType := 0;
                 POReleased := '';
                 VCheckDropShip := false;
-                PItemNo  := '';
+                PItemNo := '';
                 VDestCde := '';
 
                 Customer.SetCurrentkey(Customer."No.");
-                Customer.SetRange(Customer."No.","Sales Header"."Sell-to Customer No.");
+                Customer.SetRange(Customer."No.", "Sales Header"."Sell-to Customer No.");
                 if Customer.Find('-') then VDestCde := Customer."Destination Code";
 
-                if "Sales Header".Status = 1 then PReleased := 'X';
-                SalesLine.SetCurrentkey("Document Type","Document No.");
-                SalesLine.SetRange("Document Type",1);
-                SalesLine.SetRange("Document No.","Sales Header"."No.");
-                if SalesLine.Find('-') then
-                begin
-                if SalesLine."Drop Shipment" = true then
-                  begin
-                  PDropShip := 'X';
-                  VCheckDropShip := true;
-                  end;
-                PPurchOrder := SalesLine."Purchase Order No.";
-                if SalesLine.Type = 2 then PItemNo  := SalesLine."No.";
-                //Total freight for the order
-                TOrderWeight := 0;
-                repeat
-                VOrderAmt := VOrderAmt + SalesLine.Amount;
-                VOrderWt := VOrderWt + (SalesLine.Quantity * SalesLine."Gross Weight");
-                TOrderWeight := TOrderWeight + (SalesLine.Quantity * SalesLine."Gross Weight");
-                until SalesLine.Next = 0;
+                if "Sales Header".Status = "Sales Document Status"::Released then PReleased := 'X';
+                SalesLine.SetCurrentkey("Document Type", "Document No.");
+                SalesLine.SetRange("Document Type", 1);
+                SalesLine.SetRange("Document No.", "Sales Header"."No.");
+                if SalesLine.Find('-') then begin
+                    if SalesLine."Drop Shipment" = true then begin
+                        PDropShip := 'X';
+                        VCheckDropShip := true;
+                    end;
+                    PPurchOrder := SalesLine."Purchase Order No.";
+                    if SalesLine.Type = 2 then PItemNo := SalesLine."No.";
+                    //Total freight for the order
+                    TOrderWeight := 0;
+                    repeat
+                        VOrderAmt := VOrderAmt + SalesLine.Amount;
+                        VOrderWt := VOrderWt + (SalesLine.Quantity * SalesLine."Gross Weight");
+                        TOrderWeight := TOrderWeight + (SalesLine.Quantity * SalesLine."Gross Weight");
+                    until SalesLine.Next = 0;
                 end;
                 VPickType := 0;
                 PrintPick := '';
 
-                if PItemNo <> '' then
-                begin
-                ItemRecord.Get(PItemNo);
-                //CS 01-11-16: Filter down to Vendor specified on request page.
-                if (VVendorSort <> '') and (ItemRecord."Vendor No." = VVendorSort) then
-                    POVendor := ItemRecord."Vendor No."
-                else if VVendorSort = '' then
-                    POVendor := ItemRecord."Vendor No."
-                else
-                    CurrReport.Skip;
+                if PItemNo <> '' then begin
+                    ItemRecord.Get(PItemNo);
+                    //CS 01-11-16: Filter down to Vendor specified on request page.
+                    if (VVendorSort <> '') and (ItemRecord."Vendor No." = VVendorSort) then
+                        POVendor := ItemRecord."Vendor No."
+                    else
+                        if VVendorSort = '' then
+                            POVendor := ItemRecord."Vendor No."
+                        else
+                            CurrReport.Skip;
                 end;
 
                 //Get Pick type
                 VPickType := ItemRecord."Pick Type";
                 case VPickType of
-                1 : PrintPick := 'Hazardous/Air';
-                2 : PrintPick := 'Freeze/Chill';
-                else PrintPick := ''
+                    1:
+                        PrintPick := 'Hazardous/Air';
+                    2:
+                        PrintPick := 'Freeze/Chill';
+                    else
+                        PrintPick := ''
                 end;
 
-                if PPurchOrder <> '' then
-                begin
-                PurchHead.SetCurrentkey("Document Type","No.");
-                PurchHead.SetRange("Document Type",1);
-                PurchHead.SetRange("No.",PPurchOrder);
-                  if PurchHead.Find('+') then
-                  begin
-                  Pconfirm := PurchHead."ANICA Confirmed";
-                    //CS 01-11-16: Filter down to Vendor specified on request page.
-                    if (VVendorSort <> '') and (ItemRecord."Vendor No." = VVendorSort) then
-                        POVendor := PurchHead."Buy-from Vendor No."
-                    else if VVendorSort = '' then
-                        POVendor := PurchHead."Buy-from Vendor No."
-                    else
-                        CurrReport.Skip;
-                  if PurchHead.Status = 1 then POReleased := 'X';
-                  end;
+                if PPurchOrder <> '' then begin
+                    PurchHead.SetCurrentkey("Document Type", "No.");
+                    PurchHead.SetRange("Document Type", 1);
+                    PurchHead.SetRange("No.", PPurchOrder);
+                    if PurchHead.Find('+') then begin
+                        Pconfirm := PurchHead."ANICA Confirmed";
+                        //CS 01-11-16: Filter down to Vendor specified on request page.
+                        if (VVendorSort <> '') and (ItemRecord."Vendor No." = VVendorSort) then
+                            POVendor := PurchHead."Buy-from Vendor No."
+                        else
+                            if VVendorSort = '' then
+                                POVendor := PurchHead."Buy-from Vendor No."
+                            else
+                                CurrReport.Skip;
+                        if PurchHead.Status = 1 then POReleased := 'X';
+                    end;
                 end;
 
                 if (PDropShip <> 'X') and ("Sales Header"."Location Code" = 'ADC')
-                then POVendor := '';
+                then
+                    POVendor := '';
 
 
-                if POVendor <> '' then
-                begin
-                VendorRecord.Get(POVendor);
-                PVendName := VendorRecord.Name;
-                PVendType := VendorRecord."Vendor Type Code";
+                if POVendor <> '' then begin
+                    VendorRecord.Get(POVendor);
+                    PVendName := VendorRecord.Name;
+                    PVendType := VendorRecord."Vendor Type Code";
                 end;
 
                 //Print Grocery Orders Only
-                if PGroceryOnly = true then
-                   begin
-                   if PVendType <> 2 then CurrReport.Skip;
-                   end;
+                if PGroceryOnly = true then begin
+                    if PVendType <> 2 then CurrReport.Skip;
+                end;
 
                 //Print Inventory Orders Only
-                if PInventoryOnly = true then
-                   begin
-                   if VCheckDropShip = true then CurrReport.Skip;
-                   if "Sales Header"."Sales Order Type" = 3 then CurrReport.Skip;
-                   end;
+                if PInventoryOnly = true then begin
+                    if VCheckDropShip = true then CurrReport.Skip;
+                    if "Sales Header"."Sales Order Type" = 3 then CurrReport.Skip;
+                end;
 
                 //Print Promotional Orders Only
-                if PPromoOnly = true then
-                   begin
-                   if "Sales Header"."Sales Order Type" <> 3 then CurrReport.Skip;
-                   end;
+                if PPromoOnly = true then begin
+                    if "Sales Header"."Sales Order Type" <> 3 then CurrReport.Skip;
+                end;
 
                 TotalAmt := TotalAmt + Amount;
-                TotalWeight := TotalWeight +TOrderWeight;
+                TotalWeight := TotalWeight + TOrderWeight;
             end;
 
             trigger OnPreDataItem()
@@ -221,22 +218,22 @@ Report 50045 "ADC Daily Sales Order Summary"
                 group(Options)
                 {
                     Caption = 'Options';
-                    field(PGroceryOnly;PGroceryOnly)
+                    field(PGroceryOnly; PGroceryOnly)
                     {
                         ApplicationArea = Basic;
                         Caption = 'Print Grocery Orders Only';
                     }
-                    field(PInventoryOnly;PInventoryOnly)
+                    field(PInventoryOnly; PInventoryOnly)
                     {
                         ApplicationArea = Basic;
                         Caption = 'Print Inventory Orders Only';
                     }
-                    field(PPromoOnly;PPromoOnly)
+                    field(PPromoOnly; PPromoOnly)
                     {
                         ApplicationArea = Basic;
                         Caption = 'Print Promotional Orders Only';
                     }
-                    field(VVendorSort;VVendorSort)
+                    field(VVendorSort; VVendorSort)
                     {
                         ApplicationArea = Basic;
                         Caption = 'Vendor (Leave blank to see all)';
