@@ -3,10 +3,10 @@ Page 50035 "Item Cross Reference ANICA"
     Caption = 'Item Cross References';
     Editable = true;
     PageType = List;
-    SourceTable = "Item Cross Reference";
-    SourceTableView = sorting("Cross-Reference No.")
+    SourceTable = "Item Reference";
+    SourceTableView = sorting("Reference No.") //changed from "Cross-Reference No."
                       order(ascending)
-                      where("Cross-Reference Type" = const(" "));
+                      where("Reference Type" = const(" ")); //changed from "Cross-Reference Type"
 
     layout
     {
@@ -14,7 +14,7 @@ Page 50035 "Item Cross Reference ANICA"
         {
             repeater(Control1)
             {
-                field("Cross-Reference No."; Rec."Cross-Reference No.")
+                field("Cross-Reference No."; Rec."Reference No.")
                 {
                     ApplicationArea = Basic;
                 }
@@ -82,7 +82,7 @@ Page 50035 "Item Cross Reference ANICA"
                     ApplicationArea = Basic;
                     Visible = false;
                 }
-                field("Cross-Reference Type"; Rec."Cross-Reference Type")
+                field("Cross-Reference Type"; Rec."Reference Type")
                 {
                     ApplicationArea = Basic;
                     Visible = false;
@@ -92,11 +92,12 @@ Page 50035 "Item Cross Reference ANICA"
                     ApplicationArea = Basic;
                     Visible = false;
                 }
-                field("Discontinue Bar Code"; Rec."Discontinue Bar Code")
-                {
-                    ApplicationArea = Basic;
-                    Visible = false;
-                }
+                //Removed
+                // field("Discontinue Bar Code"; Rec."Discontinue Bar Code")
+                // {
+                //     ApplicationArea = Basic;
+                //     Visible = false;
+                // }
             }
         }
     }

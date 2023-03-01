@@ -1,4 +1,4 @@
-tableextension 50027 "Item Cross Reference" extends "Item Cross Reference"
+tableextension 50027 "Item Reference" extends "Item Reference"
 {
     fields
     {
