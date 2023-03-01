@@ -30,6 +30,10 @@ tableextension 50007 "Sales Line" extends "Sales Line"
         field(50033; "Telxon Quantity"; Decimal) { }
     }
 
+    keys
+    {
+    }
+
     var
         myInt: Integer;
 }
