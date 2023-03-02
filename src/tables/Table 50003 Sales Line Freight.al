@@ -5,9 +5,9 @@ Table 50003 "Sales Line Freight"
 
     fields
     {
-        field(1; "Document Type"; Option)
+        field(1; "Document Type"; Enum "Sales Document Type") //Changed from Option
         {
-            OptionMembers = Quote,"Order",Invoice,"Credit Memo","Blanket Order";
+            //OptionMembers = Quote,"Order",Invoice,"Credit Memo","Blanket Order";
         }
         field(2; "Sell-to Customer No."; Code[20])
         {

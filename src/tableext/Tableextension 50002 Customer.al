@@ -39,6 +39,10 @@ tableextension 50002 Customer extends Customer
         field(50035; "Assigned Targets"; Code[10]) { }
     }
 
+    keys
+    {
+        key(Key50000; "Credit Report") { }
+    }
     var
         myInt: Integer;
 }
