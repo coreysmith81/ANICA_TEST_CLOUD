@@ -1,21 +1,8 @@
 Report 50000 "Freight Calculation"
 {
-    // //>> MAS
+    // //>>
     // Freight Calculation Routines.
     // //<<
-    // 
-    // ANICA 9-13-05, add dimension routine for ver 3.7 which updates the document dimension table for changes in department codes
-    // 
-    // //MAS: 06/20/01, MAS200
-    //         Added code to 'RecalcRetailPerSalesLine' function to prevent calculating retail when
-    //          Commidity Code = 'OS' and when Gen.Prod.Post.Grp = 'STOREU'.
-    //        09/11/01, MAS200
-    //         Rearranged calculation 'Retail Price per Unit'.
-    // //ANICA:  10/25/01
-    //         Revised Retail calculations to use new CAP code Tables
-    // //ANICA 09/02/04 Added check to force a retail for certain shipping instructions.
-    // 
-    // //ANICA 8-21-15 Create Freight Lines, change sales line type VALIDATION to a direct assignment of type to be "G/L Account"
     DefaultLayout = RDLC;
     RDLCLayout = './Layouts/Freight Calculation.rdlc';
 
@@ -322,11 +309,7 @@ Report 50000 "Freight Calculation"
             SalesLine.Validate("Document Type", SalesLineFreight."Document Type");
             SalesLine.Validate("Document No.", SalesLineFreight."Document No.");
             SalesLine.Validate("Sell-to Customer No.", SalesLineFreight."Sell-to Customer No.");
-            //<<ANICA CHANGE 8-21-15, remove sales line validation due to Status Check in the sales line table in 2015 version
-            //Instead, make the sales line type a "G/L Account" without validation
-            // SalesLine.VALIDATE(Type,SalesLine.Type::"G/L Account"); // check description
             SalesLine.Type := SalesLine.Type::"G/L Account";
-            //>>END ANICA Change
             SalesLine.Validate("No.", SalesLineFreight."Freight Account");
             SalesLine.Quantity := 1;
             SalesLine."Unit Price" := ROUND(SalesLineFreight2."Freight to Invoice", 0.01);
@@ -382,16 +365,6 @@ Report 50000 "Freight Calculation"
 
         Carrier.Get(ShipLeg.Carrier);
 
-        /*
-        //Old situation:
-        _TotalWeight := SalesLine."Gross Weight" * SalesLine.Quantity;
-        IF _TotalWeight <= Carrier."Pivot Pounds (Air Freight)" THEN
-           _EstimatedFreight := AirFreightRate."Low Flat Rate" + (AirFreightRate."Rate per pound" * _TotalWeight)
-        ELSE
-           _EstimatedFreight := AirFreightRate."High Flat Rate" + (AirFreightRate."Rate per pound" * _TotalWeight);
-        */
-
-        //New Situation:
         _TotalWeight := SalesLine."Gross Weight" * SalesLine.Quantity;
         if SalesLine."Gross Weight" <= Carrier."Pivot Pounds (Air Freight)" then
             _EstimatedFreight := AirFreightRate."Low Flat Rate"
@@ -477,7 +450,6 @@ Report 50000 "Freight Calculation"
 
         SalesLine.CalcFields("Estimated Freight");
         SalesLine."Retail Price Per Unit" :=
-        //           ((SalesLine."Unit Price" + SalesLine."Estimated Freight") / ItemUOM.Pack) /
                    ((SalesLine."Unit Price" + (SalesLine."Estimated Freight" / SalesLine.Quantity)) / ItemUOM.Pack) /
                    (1 - (Commodity.Margin / 100));
         SalesLine."Retail Price Per Unit" :=
@@ -533,30 +505,6 @@ Report 50000 "Freight Calculation"
         CreateReserveLine(SalesHeader);
         CreateAnicaFeeLine(SalesHeader);
         CreateTobaccoTaxLine(SalesHeader);
-
-        //
-        /* (Don't have to be recalculated here)
-        //Recalc SalesLine Landed Cost and Actual GPM fields:
-        SalesLine.LOCKTABLE;
-        SalesLine.SETRANGE("Document Type",SalesLine."Document Type");
-        SalesLine.SETRANGE("Document No.",SalesLine."Document No.");
-        SalesLine.SETRANGE(Type,SalesLine.Type::Item);
-        
-        IF SalesLine.FIND('-') THEN
-          REPEAT
-        //  Recalc Landed Cost field:
-            SalesLine.CALCFIELDS("Estimated Freight");
-            SalesLine."Landed Cost" := ROUND((SalesLine."Unit Price" + SalesLine."Estimated Freight"),0.01);
-        //  Recalc Actual GPM:
-            ItemUOM.GET(SalesLine."No.",SalesLine."Unit of Measure Code"); // for Pack
-            ItemUOM.TESTFIELD(Pack);  // or pack from SalesLine ?
-            //SalesLine.TESTFIELD("Retail Price Per Unit");
-            SalesLine."Actual Margin" :=
-               ROUND((SalesLine."Retail Price Per Unit"-(SalesLine."Landed Cost"/ItemUOM.Pack))/
-                      SalesLine."Retail Price Per Unit",0.01);
-            SalesLine.MODIFY;
-          UNTIL SalesLine.NEXT = 0;
-        */
 
     end;
 
