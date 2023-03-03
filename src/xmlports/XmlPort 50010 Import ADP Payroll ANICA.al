@@ -12,18 +12,18 @@ XmlPort 50010 "Import ADP Payroll ANICA"
     {
         textelement(Root)
         {
-            tableelement("Gen. Journal Line";"Gen. Journal Line")
+            tableelement("Gen. Journal Line"; "Gen. Journal Line")
             {
                 AutoReplace = true;
                 XmlName = 'GenJournalLine';
-                SourceTableView = sorting("Journal Template Name","Journal Batch Name","Line No.") order(ascending);
+                SourceTableView = sorting("Journal Template Name", "Journal Batch Name", "Line No.") order(ascending);
                 textelement(ImpPostingDate)
                 {
 
                     trigger OnAfterAssignVariable()
                     begin
                         //Convert posting date
-                        if Evaluate(VPostingDate,ImpPostingDate) = false then Message('Invalid Date');
+                        if Evaluate(VPostingDate, ImpPostingDate) = false then Message('Invalid Date');
                     end;
                 }
                 textelement(VDocumentType)
@@ -59,63 +59,66 @@ XmlPort 50010 "Import ADP Payroll ANICA"
                     trigger OnAfterAssignVariable()
                     begin
                         //Convert amount
-                        if Evaluate(VAmount,ImpAmount) = false then Message('Invalid Amount');
+                        if Evaluate(VAmount, ImpAmount) = false then Message('Invalid Amount');
                     end;
                 }
 
                 trigger OnBeforeInsertRecord()
                 begin
-                    with "Gen. Journal Line" do
-                              begin
-                              "Journal Template Name" := 'GENERAL';
-                              "Journal Batch Name" := 'PAYROLL';
-                              "Posting Date" := VPostingDate;
-                              //Make a text version of the date for the accrual description
-                              VPrnDate := Format(VPostingDate,0,'<Month>') + '-' + Format(VPostingDate,0,'<Day>');
-                              //Make a text version of the date for the estimated accrual description
-                              VEstPrnDate := Format(VPostingDate + 14,0,'<Month>') + '-' + Format(VPostingDate + 14,0,'<Day>');
-                              Validate("Posting Date");
-                              GetLineNumber;
-                              "Gen. Journal Line"."Line No." := VLineNumber;
-                              "Document Date" := VPostingDate;
-                              Validate("Document Date");
-                              "Document Type" := 0;
-                              Validate("Document Type");
-                              "Document No." := VDocumentNo;
-                              "External Document No." := VDocumentNo;
-                              //VALIDATE("Document No.");
-                              //Get values for Account Type
-                              case VAccountType of
-                              'G/L Account': "Account Type" := 0;
-                              'Customer': "Account Type" := 1;
-                              'Vendor': "Account Type" := 2;
-                              'Bank Account': "Account Type" := 3;
-                              'Fixed Asset': "Account Type" := 4;
-                              else "Account Type" := 0;
-                              end;
-                              Validate("Account Type");
-                              "Account No." := VAccountNo;
-                              Validate("Account No.");
-                              Description := VDescrip;
-                              Validate(Description);
-                              Amount := VAmount;
-                              Validate(Amount);
-                              "Shortcut Dimension 1 Code" := VDiv;
-                              Validate("Shortcut Dimension 1 Code");
-                              end;
+                    "Gen. Journal Line"."Journal Template Name" := 'GENERAL';
+                    "Gen. Journal Line"."Journal Batch Name" := 'PAYROLL';
+                    "Gen. Journal Line"."Posting Date" := VPostingDate;
+                    //Make a text version of the date for the accrual description
+                    VPrnDate := Format(VPostingDate, 0, '<Month>') + '-' + Format(VPostingDate, 0, '<Day>');
+                    //Make a text version of the date for the estimated accrual description
+                    VEstPrnDate := Format(VPostingDate + 14, 0, '<Month>') + '-' + Format(VPostingDate + 14, 0, '<Day>');
+                    "Gen. Journal Line".Validate("Posting Date");
+                    GetLineNumber;
+                    "Gen. Journal Line"."Line No." := VLineNumber;
+                    "Gen. Journal Line"."Document Date" := VPostingDate;
+                    "Gen. Journal Line".Validate("Document Date");
+                    "Gen. Journal Line"."Document Type" := "Gen. Journal Document Type"::" ";
+                    "Gen. Journal Line".Validate("Document Type");
+                    "Gen. Journal Line"."Document No." := VDocumentNo;
+                    "Gen. Journal Line"."External Document No." := VDocumentNo;
+                    "Gen. Journal Line".VALIDATE("Document No.");
+
+                    //Get values for Account Type
+                    case VAccountType of
+                        'G/L Account':
+                            "Gen. Journal Line"."Account Type" := "Gen. Journal Account Type"::"G/L Account";
+                        'Customer':
+                            "Gen. Journal Line"."Account Type" := "Gen. Journal Account Type"::Customer;
+                        'Vendor':
+                            "Gen. Journal Line"."Account Type" := "Gen. Journal Account Type"::Vendor;
+                        'Bank Account':
+                            "Gen. Journal Line"."Account Type" := "Gen. Journal Account Type"::"Bank Account";
+                        'Fixed Asset':
+                            "Gen. Journal Line"."Account Type" := "Gen. Journal Account Type"::"Fixed Asset";
+                        else
+                            "Gen. Journal Line"."Account Type" := "Gen. Journal Account Type"::"G/L Account";
+                    end;
+
+                    "Gen. Journal Line".Validate("Account Type");
+                    "Gen. Journal Line"."Account No." := VAccountNo;
+                    "Gen. Journal Line".Validate("Account No.");
+                    "Gen. Journal Line".Description := VDescrip;
+                    "Gen. Journal Line".Validate(Description);
+                    "Gen. Journal Line".Amount := VAmount;
+                    "Gen. Journal Line".Validate(Amount);
+                    "Gen. Journal Line"."Shortcut Dimension 1 Code" := VDiv;
+                    "Gen. Journal Line".Validate("Shortcut Dimension 1 Code");
 
                     //Create the accrual and reversal lines
-                    if VCreateAccrual then
-                    begin
-                    CreateAccrualLine;
-                    CreateReversalLIne;
+                    if VCreateAccrual then begin
+                        CreateAccrualLine;
+                        CreateReversalLIne;
                     end;
 
                     //Create the Estimated accrual and reversal lines
-                    if VCreateEstAccrual then
-                    begin
-                    CreateEstAccrualLine;
-                    CreateEstReversalLine;
+                    if VCreateEstAccrual then begin
+                        CreateEstAccrualLine;
+                        CreateEstReversalLine;
                     end;
                 end;
             }
@@ -132,32 +135,32 @@ XmlPort 50010 "Import ADP Payroll ANICA"
                 group("<Control1000000011>")
                 {
                     Caption = 'Options';
-                    field("<Control8>";VCreateAccrual)
+                    field("<Control8>"; VCreateAccrual)
                     {
                         ApplicationArea = Basic;
                         Caption = 'Check to Create Accrual and Reversing Entries';
                     }
-                    field("<Control2>";VAccrualDate)
+                    field("<Control2>"; VAccrualDate)
                     {
                         ApplicationArea = Basic;
                         Caption = 'Enter Payroll Accrual Date';
                     }
-                    field("<Control3>";VReversalDate)
+                    field("<Control3>"; VReversalDate)
                     {
                         ApplicationArea = Basic;
                         Caption = 'Enter Date for Reversing Entry';
                     }
-                    field("<Control4>";VDaysAccrued)
+                    field("<Control4>"; VDaysAccrued)
                     {
                         ApplicationArea = Basic;
                         Caption = 'Enter Number of Days to Accrue';
                     }
-                    field("<Control5>";VCreateEstAccrual)
+                    field("<Control5>"; VCreateEstAccrual)
                     {
                         ApplicationArea = Basic;
                         Caption = 'Check to Create Estimated Accrual and Reversing Entries';
                     }
-                    field("<Control6>";VEstDaysAccrued)
+                    field("<Control6>"; VEstDaysAccrued)
                     {
                         ApplicationArea = Basic;
                         Caption = 'Enter Number of Estimated Days to Accrue';
@@ -175,95 +178,82 @@ XmlPort 50010 "Import ADP Payroll ANICA"
     begin
 
         //Create contra accrual lines for both entries
-        if VCreateAccrual then
-        begin
-           with GenJournalLine1 do
-                  begin
-                  Init;
-                  "Journal Template Name" := 'GENERAL';
-                  "Journal Batch Name" := 'PRACCRUE';
-                  "Shortcut Dimension 1 Code" := 'ANICA';
-                  "Line No." := VLineNumber + 10;
-                  Insert(true);
-                  "Posting Date" := VAccrualDate;
-                  "Document Date" := VAccrualDate;
-                  "Document Type" := 0;
-                  "Document No." := 'Payroll Accrue '  + VPrnDate;
-                  "External Document No." := 'Payroll Accrue '  + VPrnDate;
-                  "Account Type" := 0;
-                  "Account No." := '230-02';//accrued payroll
-                  Description := 'Monthend PR Accrual';
-                  Amount := -VAccrualTotal;
-                  Validate(Amount);
-                  Modify(true);
-                  end;
+        if VCreateAccrual then begin
+            GenJournalLine1.Init;
+            GenJournalLine1."Journal Template Name" := 'GENERAL';
+            GenJournalLine1."Journal Batch Name" := 'PRACCRUE';
+            GenJournalLine1."Shortcut Dimension 1 Code" := 'ANICA';
+            GenJournalLine1."Line No." := VLineNumber + 10;
+            GenJournalLine1.Insert(true);
+            GenJournalLine1."Posting Date" := VAccrualDate;
+            GenJournalLine1."Document Date" := VAccrualDate;
+            GenJournalLine1."Document Type" := "Gen. Journal Document Type"::" ";
+            ;
+            GenJournalLine1."Document No." := 'Payroll Accrue ' + VPrnDate;
+            GenJournalLine1."External Document No." := 'Payroll Accrue ' + VPrnDate;
+            GenJournalLine1."Account Type" := "Gen. Journal Account Type"::"G/L Account";
+            GenJournalLine1."Account No." := '230-02';//accrued payroll
+            GenJournalLine1.Description := 'Monthend PR Accrual';
+            GenJournalLine1.Amount := -VAccrualTotal;
+            GenJournalLine1.Validate(Amount);
+            GenJournalLine1.Modify(true);
 
-           with GenJournalLine2 do
-                  begin
-                  Init;
-                  "Journal Template Name" := 'GENERAL';
-                  "Journal Batch Name" := 'PRREVERSE';
-                  "Shortcut Dimension 1 Code" := 'ANICA';
-                  "Line No." := VLineNumber + 10;
-                  Insert(true);
-                  "Posting Date" := VReversalDate;
-                  "Document Date" := VReversalDate;
-                  "Document Type" := 0;
-                  "Document No." := 'Rev PR Accrual ' + VPrnDate;
-                  "External Document No." := 'Rev PR Accrual ' + VPrnDate;
-                  "Account Type" := 0;
-                  "Account No." := '230-02';//accrued payroll
-                  Description := 'Reverse PR Accrual';
-                  Amount := VAccrualTotal;
-                  Validate(Amount);
-                  Modify(true);
-                  end;
+            GenJournalLine2.Init;
+            GenJournalLine2."Journal Template Name" := 'GENERAL';
+            GenJournalLine2."Journal Batch Name" := 'PRREVERSE';
+            GenJournalLine2."Shortcut Dimension 1 Code" := 'ANICA';
+            GenJournalLine2."Line No." := VLineNumber + 10;
+            GenJournalLine2.Insert(true);
+            GenJournalLine2."Posting Date" := VReversalDate;
+            GenJournalLine2."Document Date" := VReversalDate;
+            GenJournalLine2."Document Type" := "Gen. Journal Document Type"::" ";
+            GenJournalLine2."Document No." := 'Rev PR Accrual ' + VPrnDate;
+            GenJournalLine2."External Document No." := 'Rev PR Accrual ' + VPrnDate;
+            GenJournalLine2."Account Type" := "Gen. Journal Account Type"::"G/L Account";
+            GenJournalLine2."Account No." := '230-02';//accrued payroll
+            GenJournalLine2.Description := 'Reverse PR Accrual';
+            GenJournalLine2.Amount := VAccrualTotal;
+            GenJournalLine2.Validate(Amount);
+            GenJournalLine2.Modify(true);
         end;
 
         //Create contra accrual lines for both estimated entries
-        if VCreateEstAccrual then
-        begin
-           with GenJournalLine3 do
-                  begin
-                  Init;
-                  "Journal Template Name" := 'GENERAL';
-                  "Journal Batch Name" := 'ESTPRACCR';
-                  "Shortcut Dimension 1 Code" := 'ANICA';
-                  "Line No." := VLineNumber + 10;
-                  Insert(true);
-                  "Posting Date" := VAccrualDate;
-                  "Document Date" := VAccrualDate;
-                  "Document Type" := 0;
-                  "Document No." := 'Est PR Accrued '  + VEstPrnDate;
-                  "External Document No." := 'Rev PR Accrual ' + VPrnDate;
-                  "Account Type" := 0;
-                  "Account No." := '230-02';//accrued payroll
-                  Description := 'Monthend PR Accrual';
-                  Amount := -VEstAccrualTotal;
-                  Validate(Amount);
-                  Modify(true);
-                  end;
+        if VCreateEstAccrual then begin
+            GenJournalLine3.Init;
+            GenJournalLine3."Journal Template Name" := 'GENERAL';
+            GenJournalLine3."Journal Batch Name" := 'ESTPRACCR';
+            GenJournalLine3."Shortcut Dimension 1 Code" := 'ANICA';
+            GenJournalLine3."Line No." := VLineNumber + 10;
+            GenJournalLine3.Insert(true);
+            GenJournalLine3."Posting Date" := VAccrualDate;
+            GenJournalLine3."Document Date" := VAccrualDate;
+            GenJournalLine3."Document Type" := "Gen. Journal Document Type"::" ";
+            GenJournalLine3."Document No." := 'Est PR Accrued ' + VEstPrnDate;
+            GenJournalLine3."External Document No." := 'Rev PR Accrual ' + VPrnDate;
+            GenJournalLine3."Account Type" := "Gen. Journal Account Type"::"G/L Account";
+            GenJournalLine3."Account No." := '230-02';//accrued payroll
+            GenJournalLine3.Description := 'Monthend PR Accrual';
+            GenJournalLine3.Amount := -VEstAccrualTotal;
+            GenJournalLine3.Validate(Amount);
+            GenJournalLine3.Modify(true);
 
-           with GenJournalLine4 do
-                  begin
-                  Init;
-                  "Journal Template Name" := 'GENERAL';
-                  "Journal Batch Name" := 'ESTPRREV';
-                  "Shortcut Dimension 1 Code" := 'ANICA';
-                  "Line No." := VLineNumber + 10;
-                  Insert(true);
-                  "Posting Date" := VReversalDate;
-                  "Document Date" := VReversalDate;
-                  "Document Type" := 0;
-                  "Document No." := 'Rev Est PR ' + VEstPrnDate;
-                  "External Document No." :=  'Rev Est PR ' + VEstPrnDate;
-                  "Account Type" := 0;
-                  "Account No." := '230-02';//accrued payroll
-                  Description := 'Reverse PR Accrual';
-                  Amount := VEstAccrualTotal;
-                  Validate(Amount);
-                  Modify(true);
-                  end;
+            GenJournalLine4.Init;
+            GenJournalLine4."Journal Template Name" := 'GENERAL';
+            GenJournalLine4."Journal Batch Name" := 'ESTPRREV';
+            GenJournalLine4."Shortcut Dimension 1 Code" := 'ANICA';
+            GenJournalLine4."Line No." := VLineNumber + 10;
+            GenJournalLine4.Insert(true);
+            GenJournalLine4."Posting Date" := VReversalDate;
+            GenJournalLine4."Document Date" := VReversalDate;
+            GenJournalLine4."Document Type" := "Gen. Journal Document Type"::" ";
+            GenJournalLine4."Document No." := 'Rev Est PR ' + VEstPrnDate;
+            GenJournalLine4."External Document No." := 'Rev Est PR ' + VEstPrnDate;
+            GenJournalLine4."Account Type" := "Gen. Journal Account Type"::"G/L Account";
+            GenJournalLine4."Account No." := '230-02';//accrued payroll
+            GenJournalLine4.Description := 'Reverse PR Accrual';
+            GenJournalLine4.Amount := VEstAccrualTotal;
+            GenJournalLine4.Validate(Amount);
+            GenJournalLine4.Modify(true);
         end;
 
         Message('Payroll Import is Done');
@@ -273,19 +263,17 @@ XmlPort 50010 "Import ADP Payroll ANICA"
     begin
 
         //Check request form inputs
-        if VCreateAccrual then
-        begin
-             if VAccrualDate = 0D then Error('Enter Date for Accrual');
-             if VReversalDate = 0D then Error('Enter Date for Reversal');
-             if VDaysAccrued = 0 then Error('Enter Number of Days to Accrue');
-             if VDaysAccrued > 10 then Error('Number of Days to Accrue must Be Less than or equal to 10');
-             if VAccrualDate >= VReversalDate then Error('Accrual Date Should Come Before the Reversal Date');
+        if VCreateAccrual then begin
+            if VAccrualDate = 0D then Error('Enter Date for Accrual');
+            if VReversalDate = 0D then Error('Enter Date for Reversal');
+            if VDaysAccrued = 0 then Error('Enter Number of Days to Accrue');
+            if VDaysAccrued > 10 then Error('Number of Days to Accrue must Be Less than or equal to 10');
+            if VAccrualDate >= VReversalDate then Error('Accrual Date Should Come Before the Reversal Date');
         end;
-        if VCreateEstAccrual then
-        begin
-             if VCreateAccrual = false then Error('You Must Check to Create the Accrual');
-             if VEstDaysAccrued = 0 then Error('Enter Number of Days to Accrue');
-             if VEstDaysAccrued > 10 then Error('Number of Days to Accrue must Be Less than or equal to 10');
+        if VCreateEstAccrual then begin
+            if VCreateAccrual = false then Error('You Must Check to Create the Accrual');
+            if VEstDaysAccrued = 0 then Error('Enter Number of Days to Accrue');
+            if VEstDaysAccrued > 10 then Error('Number of Days to Accrue must Be Less than or equal to 10');
         end;
     end;
 
@@ -323,199 +311,206 @@ XmlPort 50010 "Import ADP Payroll ANICA"
     var
         GenJnlLine3: Record "Gen. Journal Line";
     begin
-        GenJnlLine3.SetRange(GenJnlLine3."Journal Template Name","Gen. Journal Line"."Journal Template Name");
-        GenJnlLine3.SetRange(GenJnlLine3."Journal Batch Name","Gen. Journal Line"."Journal Batch Name");
+        GenJnlLine3.SetRange(GenJnlLine3."Journal Template Name", "Gen. Journal Line"."Journal Template Name");
+        GenJnlLine3.SetRange(GenJnlLine3."Journal Batch Name", "Gen. Journal Line"."Journal Batch Name");
         if GenJnlLine3.Find('+') then
-           VLineNumber := GenJnlLine3."Line No." + 10
-           else
-           VLineNumber := 10;
+            VLineNumber := GenJnlLine3."Line No." + 10
+        else
+            VLineNumber := 10;
     end;
 
     local procedure CreateAccrualLine()
     begin
-        with GenJournalLine1 do
-                  begin
-                     if (VAccountType <> 'Bank Account') and (VAccountNo <> '125-05') then
-                     begin
-                     Init;
-                     "Journal Template Name" := 'GENERAL';
-                     "Journal Batch Name" := 'PRACCRUE';
-                     "Shortcut Dimension 1 Code" := VDiv;
-                     "Line No." := VLineNumber;
-                     Insert(true);
-                     "Posting Date" := VAccrualDate;
-                     Validate("Posting Date");
-                     "Document Date" := VAccrualDate;
-                     Validate("Document Date");
-                     "Document Type" := 0;
-                     Validate("Document Type");
-                     "Document No." := 'Payroll Accrue '  + VPrnDate;
-                     "External Document No."  := 'Payroll Accrue '  + VPrnDate;
-                     //VALIDATE("Document No.");
-                     //Get values for Account Type
-                     case VAccountType of
-                     'G/L Account': "Account Type" := 0;
-                     'Customer': "Account Type" := 1;
-                     'Vendor': "Account Type" := 2;
-                     'Bank Account': "Account Type" := 3;
-                     'Fixed Asset': "Account Type" := 4;
-                     else "Account Type" := 0;
-                     end;
-                     Validate("Account Type");
-                     "Account No." := VAccountNo;
-                     Validate("Account No.");
-                     Description := VDescrip;
-                     Validate(Description);
-                     Amount := ROUND((VAmount * (VDaysAccrued/10)),1);
-                     Validate(Amount);
-                     Validate("Shortcut Dimension 1 Code");
-                     //Get entry total
-                     VAccrualTotal := VAccrualTotal + Amount ;
-                     Modify(true);
-                     end;
-                  end;
+        if (VAccountType <> 'Bank Account') and (VAccountNo <> '125-05') then begin
+            GenJournalLine1.Init;
+            GenJournalLine1."Journal Template Name" := 'GENERAL';
+            GenJournalLine1."Journal Batch Name" := 'PRACCRUE';
+            GenJournalLine1."Shortcut Dimension 1 Code" := VDiv;
+            GenJournalLine1."Line No." := VLineNumber;
+            GenJournalLine1.Insert(true);
+            GenJournalLine1."Posting Date" := VAccrualDate;
+            GenJournalLine1.Validate("Posting Date");
+            GenJournalLine1."Document Date" := VAccrualDate;
+            GenJournalLine1.Validate("Document Date");
+            GenJournalLine1."Document Type" := "Gen. Journal Document Type"::" ";
+            GenJournalLine1.Validate("Document Type");
+            GenJournalLine1."Document No." := 'Payroll Accrue ' + VPrnDate;
+            GenJournalLine1."External Document No." := 'Payroll Accrue ' + VPrnDate;
+            GenJournalLine1.VALIDATE("Document No.");
+            //Get values for Account Type
+            case VAccountType of
+                'G/L Account':
+                    GenJournalLine1."Account Type" := "Gen. Journal Account Type"::"G/L Account";
+                'Customer':
+                    GenJournalLine1."Account Type" := "Gen. Journal Account Type"::Customer;
+                'Vendor':
+                    GenJournalLine1."Account Type" := "Gen. Journal Account Type"::Vendor;
+                'Bank Account':
+                    GenJournalLine1."Account Type" := "Gen. Journal Account Type"::"Bank Account";
+                'Fixed Asset':
+                    GenJournalLine1."Account Type" := "Gen. Journal Account Type"::"Fixed Asset";
+                else
+                    GenJournalLine1."Account Type" := "Gen. Journal Account Type"::"G/L Account";
+            end;
+
+            GenJournalLine1."Account No." := VAccountNo;
+            GenJournalLine1.Validate("Account No.");
+            GenJournalLine1.Description := VDescrip;
+            GenJournalLine1.Validate(Description);
+            GenJournalLine1.Amount := ROUND((VAmount * (VDaysAccrued / 10)), 1);
+            GenJournalLine1.Validate(Amount);
+            GenJournalLine1.Validate("Shortcut Dimension 1 Code");
+            //Get entry total
+            VAccrualTotal := VAccrualTotal + GenJournalLine1.Amount;
+            GenJournalLine1.Modify(true);
+        end;
 
     end;
 
     local procedure CreateReversalLIne()
     begin
-        with GenJournalLine2 do
-                  begin
-                  //Only Create lines that are not bank account entries
-                     if (VAccountType <> 'Bank Account') and (VAccountNo <> '125-05') then
-                     begin
-                     Init;
-                     "Journal Template Name" := 'GENERAL';
-                     "Journal Batch Name" := 'PRREVERSE';
-                     "Shortcut Dimension 1 Code" := VDiv;
-                     "Line No." := VLineNumber;
-                     Insert(true);
-                     "Posting Date" := VReversalDate;
-                     Validate("Posting Date");
-                     "Document Date" := VReversalDate;
-                     Validate("Document Date");
-                     "Document Type" := 0;
-                     Validate("Document Type");
-                     "Document No." := 'Rev PR Accrual ' + VPrnDate;
-                     "External Document No." := 'Rev PR Accrual ' + VPrnDate;
-                     //VALIDATE("Document No.");
-                     //Get values for Account Type
-                     case VAccountType of
-                     'G/L Account': "Account Type" := 0;
-                     'Customer': "Account Type" := 1;
-                     'Vendor': "Account Type" := 2;
-                     'Bank Account': "Account Type" := 3;
-                     'Fixed Asset': "Account Type" := 4;
-                     else "Account Type" := 0;
-                     end;
-                     Validate("Account Type");
-                     "Account No." := VAccountNo;
-                     Validate("Account No.");
-                     Description := VDescrip;
-                     Validate(Description);
-                     Amount := -ROUND((VAmount * (VDaysAccrued/10)),1);
-                     Validate(Amount);
-                     Validate("Shortcut Dimension 1 Code");
-                     Modify(true);
-                     end;
-                  end;
-
+        //Only Create lines that are not bank account entries
+        if (VAccountType <> 'Bank Account') and (VAccountNo <> '125-05') then begin
+            GenJournalLine2.Init;
+            GenJournalLine2."Journal Template Name" := 'GENERAL';
+            GenJournalLine2."Journal Batch Name" := 'PRREVERSE';
+            GenJournalLine2."Shortcut Dimension 1 Code" := VDiv;
+            GenJournalLine2."Line No." := VLineNumber;
+            GenJournalLine2.Insert(true);
+            GenJournalLine2."Posting Date" := VReversalDate;
+            GenJournalLine2.Validate("Posting Date");
+            GenJournalLine2."Document Date" := VReversalDate;
+            GenJournalLine2.Validate("Document Date");
+            GenJournalLine2."Document Type" := "Gen. Journal Document Type"::" ";
+            GenJournalLine2.Validate("Document Type");
+            GenJournalLine2."Document No." := 'Rev PR Accrual ' + VPrnDate;
+            GenJournalLine2."External Document No." := 'Rev PR Accrual ' + VPrnDate;
+            GenJournalLine2.VALIDATE("Document No.");
+            //Get values for Account Type
+            case VAccountType of
+                'G/L Account':
+                    GenJournalLine2."Account Type" := "Gen. Journal Account Type"::"G/L Account";
+                'Customer':
+                    GenJournalLine2."Account Type" := "Gen. Journal Account Type"::Customer;
+                'Vendor':
+                    GenJournalLine2."Account Type" := "Gen. Journal Account Type"::Vendor;
+                'Bank Account':
+                    GenJournalLine2."Account Type" := "Gen. Journal Account Type"::"Bank Account";
+                'Fixed Asset':
+                    GenJournalLine2."Account Type" := "Gen. Journal Account Type"::"Fixed Asset";
+                else
+                    GenJournalLine2."Account Type" := "Gen. Journal Account Type"::"G/L Account";
+                    GenJournalLine2.validate("Account Type");
+                    GenJournalLine2."Account No." := VAccountNo;
+                    GenJournalLine2.Validate("Account No.");
+                    GenJournalLine2.Description := VDescrip;
+                    GenJournalLine2.Validate(Description);
+                    GenJournalLine2.Amount := -ROUND((VAmount * (VDaysAccrued / 10)), 1);
+                    GenJournalLine2.Validate(Amount);
+                    GenJournalLine2.Validate("Shortcut Dimension 1 Code");
+                    GenJournalLine2.Modify(true);
+            end;
+        end
     end;
 
     local procedure CreateEstAccrualLine()
     begin
-        with GenJournalLine3 do
-                  begin
-                     //Check for zero lines
-                     VTestAmount := ROUND((VAmount * (VEstDaysAccrued/10)),10);
-                     if (VAccountType <> 'Bank Account') and (VAccountNo <> '125-05') and (VTestAmount <> 0) then
-                     begin
-                     Init;
-                     "Journal Template Name" := 'GENERAL';
-                     "Journal Batch Name" := 'ESTPRACCR';
-                     "Shortcut Dimension 1 Code" := VDiv;
-                     "Line No." := VLineNumber;
-                     Insert(true);
-                     //Use the regular accrual date for the posting date for the estimate
-                     "Posting Date" := VAccrualDate;
-                     Validate("Posting Date");
-                     "Document Date" := VAccrualDate;
-                     Validate("Document Date");
-                     "Document Type" := 0;
-                     Validate("Document Type");
-                     "Document No." := 'Est PR Accrued '  + VEstPrnDate;
-                     "External Document No." := 'Est PR Accrued '  + VEstPrnDate;
-                     //VALIDATE("Document No.");
-                     //Get values for Account Type
-                     case VAccountType of
-                     'G/L Account': "Account Type" := 0;
-                     'Customer': "Account Type" := 1;
-                     'Vendor': "Account Type" := 2;
-                     'Bank Account': "Account Type" := 3;
-                     'Fixed Asset': "Account Type" := 4;
-                     else "Account Type" := 0;
-                     end;
-                     Validate("Account Type");
-                     "Account No." := VAccountNo;
-                     Validate("Account No.");
-                     Description := VDescrip;
-                     Validate(Description);
-                     Amount := ROUND((VAmount * (VEstDaysAccrued/10)),10);
-                     Validate(Amount);
-                     Validate("Shortcut Dimension 1 Code");
-                     //Get entry total
-                     VEstAccrualTotal := VEstAccrualTotal + Amount;
-                     Modify(true);
-                     end;
-                  end;
+        //Check for zero lines
+        VTestAmount := ROUND((VAmount * (VEstDaysAccrued / 10)), 10);
+        if (VAccountType <> 'Bank Account') and (VAccountNo <> '125-05') and (VTestAmount <> 0) then begin
+            GenJournalLine3.Init;
+            GenJournalLine3."Journal Template Name" := 'GENERAL';
+            GenJournalLine3."Journal Batch Name" := 'ESTPRACCR';
+            GenJournalLine3."Shortcut Dimension 1 Code" := VDiv;
+            GenJournalLine3."Line No." := VLineNumber;
+            GenJournalLine3.Insert(true);
+            //Use the regular accrual date for the posting date for the estimate
+            GenJournalLine3."Posting Date" := VAccrualDate;
+            GenJournalLine3.Validate("Posting Date");
+            GenJournalLine3."Document Date" := VAccrualDate;
+            GenJournalLine3.Validate("Document Date");
+            GenJournalLine3."Document Type" := "Gen. Journal Document Type"::" ";
+            GenJournalLine3.Validate("Document Type");
+            GenJournalLine3."Document No." := 'Est PR Accrued ' + VEstPrnDate;
+            GenJournalLine3."External Document No." := 'Est PR Accrued ' + VEstPrnDate;
+            GenJournalLine3.VALIDATE("Document No.");
 
+            //Get values for Account Type
+            case VAccountType of
+                'G/L Account':
+                    GenJournalLine3."Account Type" := "Gen. Journal Account Type"::"G/L Account";
+                'Customer':
+                    GenJournalLine3."Account Type" := "Gen. Journal Account Type"::Customer;
+                'Vendor':
+                    GenJournalLine3."Account Type" := "Gen. Journal Account Type"::Vendor;
+                'Bank Account':
+                    GenJournalLine3."Account Type" := "Gen. Journal Account Type"::"Bank Account";
+                'Fixed Asset':
+                    GenJournalLine3."Account Type" := "Gen. Journal Account Type"::"Fixed Asset";
+                else
+                    GenJournalLine3."Account Type" := "Gen. Journal Account Type"::"G/L Account";
+            end;
+            GenJournalLine3.Validate("Account Type");
+            GenJournalLine3."Account No." := VAccountNo;
+            GenJournalLine3.Validate("Account No.");
+            GenJournalLine3.Description := VDescrip;
+            GenJournalLine3.Validate(Description);
+            GenJournalLine3.Amount := ROUND((VAmount * (VEstDaysAccrued / 10)), 10);
+            GenJournalLine3.Validate(Amount);
+            GenJournalLine3.Validate("Shortcut Dimension 1 Code");
+            //Get entry total
+            VEstAccrualTotal := VEstAccrualTotal + GenJournalLine3.Amount;
+            GenJournalLine3.Modify(true);
+        end;
     end;
 
     local procedure CreateEstReversalLine()
     begin
-         with GenJournalLine4 do
-                  begin
-                  //Only Create lines that are not bank account entries
-                     //Check for zero lines
-                     VTestAmount := ROUND((VAmount * (VEstDaysAccrued/10)),10);
-                     if (VAccountType <> 'Bank Account') and (VAccountNo <> '125-05') and (VTestAmount <> 0)  then
-                     begin
-                     Init;
-                     "Journal Template Name" := 'GENERAL';
-                     "Journal Batch Name" := 'ESTPRREV';
-                     "Shortcut Dimension 1 Code" := VDiv;
-                     "Line No." := VLineNumber;
-                     Insert(true);
-                     "Posting Date" := VReversalDate;
-                     Validate("Posting Date");
-                     "Document Date" := VReversalDate;
-                     Validate("Document Date");
-                     "Document Type" := 0;
-                     Validate("Document Type");
-                     "Document No." := 'Rev Est PR ' + VEstPrnDate;
-                     "External Document No." := 'Rev Est PR ' + VEstPrnDate;
-                     //VALIDATE("Document No.");
-                     //Get values for Account Type
-                     case VAccountType of
-                     'G/L Account': "Account Type" := 0;
-                     'Customer': "Account Type" := 1;
-                     'Vendor': "Account Type" := 2;
-                     'Bank Account': "Account Type" := 3;
-                     'Fixed Asset': "Account Type" := 4;
-                     else "Account Type" := 0;
-                     end;
-                     Validate("Account Type");
-                     "Account No." := VAccountNo;
-                     Validate("Account No.");
-                     Description := VDescrip;
-                     Validate(Description);
-                     Amount := -ROUND((VAmount * (VEstDaysAccrued/10)),10);
-                     Validate(Amount);
-                     Validate("Shortcut Dimension 1 Code");
-                     Modify(true);
-                     end;
-                  end;
+        //Only Create lines that are not bank account entries
+        //Check for zero lines
+        VTestAmount := ROUND((VAmount * (VEstDaysAccrued / 10)), 10);
+        if (VAccountType <> 'Bank Account') and (VAccountNo <> '125-05') and (VTestAmount <> 0) then begin
+            GenJournalLine4.Init;
+            GenJournalLine4."Journal Template Name" := 'GENERAL';
+            GenJournalLine4."Journal Batch Name" := 'ESTPRREV';
+            GenJournalLine4."Shortcut Dimension 1 Code" := VDiv;
+            GenJournalLine4."Line No." := VLineNumber;
+            GenJournalLine4.Insert(true);
+            GenJournalLine4."Posting Date" := VReversalDate;
+            GenJournalLine4.Validate("Posting Date");
+            GenJournalLine4."Document Date" := VReversalDate;
+            GenJournalLine4.Validate("Document Date");
+            GenJournalLine4."Document Type" := "Gen. Journal Document Type"::" ";
+            GenJournalLine4.Validate("Document Type");
+            GenJournalLine4."Document No." := 'Rev Est PR ' + VEstPrnDate;
+            GenJournalLine4."External Document No." := 'Rev Est PR ' + VEstPrnDate;
+            GenJournalLine4.VALIDATE("Document No.");
+            //Get values for Account Type
+            case VAccountType of
+                'G/L Account':
+                    GenJournalLine4."Account Type" := "Gen. Journal Account Type"::"G/L Account";
+                'Customer':
+                    GenJournalLine4."Account Type" := "Gen. Journal Account Type"::Customer;
+                'Vendor':
+                    GenJournalLine4."Account Type" := "Gen. Journal Account Type"::Vendor;
+                'Bank Account':
+                    GenJournalLine4."Account Type" := "Gen. Journal Account Type"::"Bank Account";
+                'Fixed Asset':
+                    GenJournalLine4."Account Type" := "Gen. Journal Account Type"::"Fixed Asset";
+                else
+                    GenJournalLine4."Account Type" := "Gen. Journal Account Type"::"G/L Account";
+            end;
 
+            GenJournalLine4.Validate("Account Type");
+            GenJournalLine4."Account No." := VAccountNo;
+            GenJournalLine4.Validate("Account No.");
+            GenJournalLine4.Description := VDescrip;
+            GenJournalLine4.Validate(Description);
+            GenJournalLine4.Amount := -ROUND((VAmount * (VEstDaysAccrued / 10)), 10);
+            GenJournalLine4.Validate(Amount);
+            GenJournalLine4.Validate("Shortcut Dimension 1 Code");
+            GenJournalLine4.Modify(true);
+        end;
     end;
 }
 

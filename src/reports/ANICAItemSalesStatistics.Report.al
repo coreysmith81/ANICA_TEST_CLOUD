@@ -11,326 +11,323 @@ Report 50031 "ANICA Item Sales Statistics"
 
     dataset
     {
-        dataitem(Item;Item)
+        dataitem(Item; Item)
         {
-            RequestFilterFields = "No.","Drop Ship Item","Search Description","Inventory Posting Group","Statistics Group","Base Unit of Measure","Date Filter";
+            RequestFilterFields = "No.", "Drop Ship Item", "Search Description", "Inventory Posting Group", "Statistics Group", "Base Unit of Measure", "Date Filter";
             column(ReportForNavId_8129; 8129)
             {
             }
-            column(Title;Title)
+            column(Title; Title)
             {
             }
-            column(FORMAT_TODAY_0_4_;Format(Today,0,4))
+            column(FORMAT_TODAY_0_4_; Format(Today, 0, 4))
             {
             }
-            column(Time;Time)
+            column(Time; Time)
             {
             }
-            column(CompanyInformation_Name;CompanyInformation.Name)
+            column(CompanyInformation_Name; CompanyInformation.Name)
             {
             }
-            column(CurrReport_PAGENO;CurrReport.PageNo)
+            column(UserId; UserId)
             {
             }
-            column(UserId;UserId)
+            column(ItemFilter; ItemFilter)
             {
             }
-            column(ItemFilter;ItemFilter)
+            column(BreakdownByVariant; BreakdownByVariant)
             {
             }
-            column(BreakdownByVariant;BreakdownByVariant)
+            column(IncludeItemDescriptions; IncludeItemDescriptions)
             {
             }
-            column(IncludeItemDescriptions;IncludeItemDescriptions)
+            column(PrintOnlyIfSales; PrintOnlyIfSales)
             {
             }
-            column(PrintOnlyIfSales;PrintOnlyIfSales)
+            column(TLGroup; TLGroup)
             {
             }
-            column(TLGroup;TLGroup)
+            column(GroupField; GroupField)
             {
             }
-            column(GroupField;GroupField)
+            column(NoShow; NoShow)
             {
             }
-            column(NoShow;NoShow)
+            column(ItemDateFilterExsit; ItemDateFilterExsit)
             {
             }
-            column(ItemDateFilterExsit;ItemDateFilterExsit)
+            column(Item_TABLECAPTION__________ItemFilter; Item.TableCaption + ': ' + ItemFilter)
             {
             }
-            column(Item_TABLECAPTION__________ItemFilter;Item.TableCaption + ': ' + ItemFilter)
+            column(GroupName_________GroupNo; GroupName + ' ' + GroupNo)
             {
             }
-            column(GroupName_________GroupNo;GroupName + ' ' + GroupNo)
+            column(GroupDesc; GroupDesc)
             {
             }
-            column(GroupDesc;GroupDesc)
+            column(Item__No__; "No.")
             {
             }
-            column(Item__No__;"No.")
+            column(Item__Base_Unit_of_Measure_; "Base Unit of Measure")
             {
             }
-            column(Item__Base_Unit_of_Measure_;"Base Unit of Measure")
+            column(Item__COGS__LCY__; "COGS (LCY)")
             {
             }
-            column(Item__COGS__LCY__;"COGS (LCY)")
+            column(Item__Unit_Price_; "Unit Price")
             {
             }
-            column(Item__Unit_Price_;"Unit Price")
+            column(Item__Sales__Qty___; "Sales (Qty.)")
             {
+                DecimalPlaces = 2 : 5;
             }
-            column(Item__Sales__Qty___;"Sales (Qty.)")
+            column(Item__Sales__LCY__; "Sales (LCY)")
             {
-                DecimalPlaces = 2:5;
             }
-            column(Item__Sales__LCY__;"Sales (LCY)")
+            column(Profit; Profit)
             {
             }
-            column(Profit;Profit)
+            column(ItemProfitPct; ItemProfitPct)
             {
+                DecimalPlaces = 1 : 1;
             }
-            column(ItemProfitPct;ItemProfitPct)
+            column(QuantityReturned; QuantityReturned)
             {
-                DecimalPlaces = 1:1;
+                DecimalPlaces = 2 : 5;
             }
-            column(QuantityReturned;QuantityReturned)
+            column(NoVariant; NoVariant)
             {
-                DecimalPlaces = 2:5;
             }
-            column(NoVariant;NoVariant)
+            column(Item_Description; Description)
             {
             }
-            column(Item_Description;Description)
+            column(Text003_________GroupName_________GroupNo; Text003 + ' ' + GroupName + ' ' + GroupNo)
             {
             }
-            column(Text003_________GroupName_________GroupNo;Text003 + ' ' + GroupName + ' ' + GroupNo)
+            column(Item__Sales__Qty____Control32; "Sales (Qty.)")
             {
+                DecimalPlaces = 2 : 5;
             }
-            column(Item__Sales__Qty____Control32;"Sales (Qty.)")
+            column(Item__Sales__LCY___Control33; "Sales (LCY)")
             {
-                DecimalPlaces = 2:5;
             }
-            column(Item__Sales__LCY___Control33;"Sales (LCY)")
+            column(Profit_Control34; Profit)
             {
             }
-            column(Profit_Control34;Profit)
+            column(ItemProfitPct_Control35; ItemProfitPct)
             {
+                DecimalPlaces = 1 : 1;
             }
-            column(ItemProfitPct_Control35;ItemProfitPct)
+            column(QuantityReturned_Control3; QuantityReturned)
             {
-                DecimalPlaces = 1:1;
+                DecimalPlaces = 2 : 5;
             }
-            column(QuantityReturned_Control3;QuantityReturned)
+            column(Item__COGS__LCY___Control4; "COGS (LCY)")
             {
-                DecimalPlaces = 2:5;
             }
-            column(Item__COGS__LCY___Control4;"COGS (LCY)")
+            column(Item__Sales__Qty____Control37; "Sales (Qty.)")
             {
+                DecimalPlaces = 2 : 5;
             }
-            column(Item__Sales__Qty____Control37;"Sales (Qty.)")
+            column(Item__Sales__LCY___Control38; "Sales (LCY)")
             {
-                DecimalPlaces = 2:5;
             }
-            column(Item__Sales__LCY___Control38;"Sales (LCY)")
+            column(Profit_Control39; Profit)
             {
             }
-            column(Profit_Control39;Profit)
+            column(ItemProfitPct_Control40; ItemProfitPct)
             {
+                DecimalPlaces = 1 : 1;
             }
-            column(ItemProfitPct_Control40;ItemProfitPct)
+            column(QuantityReturned_Control5; QuantityReturned)
             {
-                DecimalPlaces = 1:1;
+                DecimalPlaces = 2 : 5;
             }
-            column(QuantityReturned_Control5;QuantityReturned)
+            column(Item__COGS__LCY___Control6; "COGS (LCY)")
             {
-                DecimalPlaces = 2:5;
             }
-            column(Item__COGS__LCY___Control6;"COGS (LCY)")
+            column(Item_Inventory_Posting_Group; "Inventory Posting Group")
             {
             }
-            column(Item_Inventory_Posting_Group;"Inventory Posting Group")
+            column(Item_Vendor_No_; "Vendor No.")
             {
             }
-            column(Item_Vendor_No_;"Vendor No.")
+            column(CurrReport_PAGENOCaption; CurrReport_PAGENOCaptionLbl)
             {
             }
-            column(CurrReport_PAGENOCaption;CurrReport_PAGENOCaptionLbl)
+            column(Inventory_items_without_sales_are_not_included_on_this_report_Caption; Inventory_items_without_sales_are_not_included_on_this_report_CaptionLbl)
             {
             }
-            column(Inventory_items_without_sales_are_not_included_on_this_report_Caption;Inventory_items_without_sales_are_not_included_on_this_report_CaptionLbl)
+            column(Inventory_items_without_sales_during_the_above_period_are_not_included_on_this_report_Caption; Inventory_items_without_sales_during_the_above_period_are_not_included_on_this_report_CaptionLbl)
             {
             }
-            column(Inventory_items_without_sales_during_the_above_period_are_not_included_on_this_report_Caption;Inventory_items_without_sales_during_the_above_period_are_not_included_on_this_report_CaptionLbl)
+            column(Item__No__Caption; FieldCaption("No."))
             {
             }
-            column(Item__No__Caption;FieldCaption("No."))
+            column(Item__Base_Unit_of_Measure_Caption; FieldCaption("Base Unit of Measure"))
             {
             }
-            column(Item__Base_Unit_of_Measure_Caption;FieldCaption("Base Unit of Measure"))
+            column(Item__COGS__LCY__Caption; FieldCaption("COGS (LCY)"))
             {
             }
-            column(Item__COGS__LCY__Caption;FieldCaption("COGS (LCY)"))
+            column(Item__Unit_Price_Caption; FieldCaption("Unit Price"))
             {
             }
-            column(Item__Unit_Price_Caption;FieldCaption("Unit Price"))
+            column(Item__Sales__Qty___Caption; FieldCaption("Sales (Qty.)"))
             {
             }
-            column(Item__Sales__Qty___Caption;FieldCaption("Sales (Qty.)"))
+            column(Item__Sales__LCY__Caption; FieldCaption("Sales (LCY)"))
             {
             }
-            column(Item__Sales__LCY__Caption;FieldCaption("Sales (LCY)"))
+            column(ProfitCaption; ProfitCaptionLbl)
             {
             }
-            column(ProfitCaption;ProfitCaptionLbl)
+            column(ItemProfitPctCaption; ItemProfitPctCaptionLbl)
             {
             }
-            column(ItemProfitPctCaption;ItemProfitPctCaptionLbl)
+            column(QuantityReturnedCaption; QuantityReturnedCaptionLbl)
             {
             }
-            column(QuantityReturnedCaption;QuantityReturnedCaptionLbl)
+            column(Item__No__Caption_Control41; FieldCaption("No."))
             {
             }
-            column(Item__No__Caption_Control41;FieldCaption("No."))
+            column(Item__Base_Unit_of_Measure_Caption_Control43; FieldCaption("Base Unit of Measure"))
             {
             }
-            column(Item__Base_Unit_of_Measure_Caption_Control43;FieldCaption("Base Unit of Measure"))
+            column(Item__Unit_Price_Caption_Control44; FieldCaption("Unit Price"))
             {
             }
-            column(Item__Unit_Price_Caption_Control44;FieldCaption("Unit Price"))
+            column(Item__Sales__Qty___Caption_Control45; FieldCaption("Sales (Qty.)"))
             {
             }
-            column(Item__Sales__Qty___Caption_Control45;FieldCaption("Sales (Qty.)"))
+            column(QuantityReturnedCaption_Control46; QuantityReturnedCaption_Control46Lbl)
             {
             }
-            column(QuantityReturnedCaption_Control46;QuantityReturnedCaption_Control46Lbl)
+            column(Item__Sales__LCY__Caption_Control47; FieldCaption("Sales (LCY)"))
             {
             }
-            column(Item__Sales__LCY__Caption_Control47;FieldCaption("Sales (LCY)"))
+            column(Item__COGS__LCY__Caption_Control48; FieldCaption("COGS (LCY)"))
             {
             }
-            column(Item__COGS__LCY__Caption_Control48;FieldCaption("COGS (LCY)"))
+            column(ProfitCaption_Control49; ProfitCaption_Control49Lbl)
             {
             }
-            column(ProfitCaption_Control49;ProfitCaption_Control49Lbl)
+            column(ItemProfitPctCaption_Control50; ItemProfitPctCaption_Control50Lbl)
             {
             }
-            column(ItemProfitPctCaption_Control50;ItemProfitPctCaption_Control50Lbl)
+            column(Item_Variant_CodeCaption; Item_Variant_CodeCaptionLbl)
             {
             }
-            column(Item_Variant_CodeCaption;Item_Variant_CodeCaptionLbl)
+            column(Report_TotalCaption; Report_TotalCaptionLbl)
             {
             }
-            column(Report_TotalCaption;Report_TotalCaptionLbl)
+            column(DropShip; Item."Drop Ship Item")
             {
             }
-            column(DropShip;Item."Drop Ship Item")
+            column(PrintDropShip; PrintDropShip)
             {
             }
-            column(PrintDropShip;PrintDropShip)
+            column(SelectInvUnder0OVer50; SelectInvUnder0Over50)
             {
             }
-            column(SelectInvUnder0OVer50;SelectInvUnder0Over50)
+            column(SelectDroptShipNot0; SelectDShipUnder0)
             {
             }
-            column(SelectDroptShipNot0;SelectDShipUnder0)
+            dataitem("Item Variant"; "Item Variant")
             {
-            }
-            dataitem("Item Variant";"Item Variant")
-            {
-                DataItemLink = "Item No."=field("No.");
-                DataItemTableView = sorting("Item No.",Code);
+                DataItemLink = "Item No." = field("No.");
+                DataItemTableView = sorting("Item No.", Code);
                 column(ReportForNavId_7031; 7031)
                 {
                 }
-                column(Item_Variant_Code;Code)
+                column(Item_Variant_Code; Code)
                 {
                 }
-                column(Item__No___Control53;Item."No.")
+                column(Item__No___Control53; Item."No.")
                 {
                 }
-                column(Item__Base_Unit_of_Measure__Control55;Item."Base Unit of Measure")
+                column(Item__Base_Unit_of_Measure__Control55; Item."Base Unit of Measure")
                 {
                 }
-                column(Item__Unit_Price__Control56;Item."Unit Price")
+                column(Item__Unit_Price__Control56; Item."Unit Price")
                 {
                 }
-                column(Item__Sales__Qty____Control57;Item."Sales (Qty.)")
+                column(Item__Sales__Qty____Control57; Item."Sales (Qty.)")
                 {
-                    DecimalPlaces = 2:5;
+                    DecimalPlaces = 2 : 5;
                 }
-                column(QuantityReturned_Control58;QuantityReturned)
+                column(QuantityReturned_Control58; QuantityReturned)
                 {
-                    DecimalPlaces = 2:5;
+                    DecimalPlaces = 2 : 5;
                 }
-                column(Item__Sales__LCY___Control59;Item."Sales (LCY)")
-                {
-                }
-                column(Item__COGS__LCY___Control60;Item."COGS (LCY)")
+                column(Item__Sales__LCY___Control59; Item."Sales (LCY)")
                 {
                 }
-                column(Profit_Control61;Profit)
+                column(Item__COGS__LCY___Control60; Item."COGS (LCY)")
                 {
                 }
-                column(ItemProfitPct_Control62;ItemProfitPct)
-                {
-                    DecimalPlaces = 1:1;
-                }
-                column(Item_Description_Control63;Item.Description)
+                column(Profit_Control61; Profit)
                 {
                 }
-                column(Item_Variant_Description;Description)
+                column(ItemProfitPct_Control62; ItemProfitPct)
+                {
+                    DecimalPlaces = 1 : 1;
+                }
+                column(Item_Description_Control63; Item.Description)
                 {
                 }
-                column(Item_Variant_Item_No_;"Item No.")
+                column(Item_Variant_Description; Description)
+                {
+                }
+                column(Item_Variant_Item_No_; "Item No.")
                 {
                 }
 
                 trigger OnAfterGetRecord()
                 begin
                     if BlankVariant then begin
-                      Code := '';
-                      "Item No." := '';
-                      Description := 'Blank Variant';
-                      "Description 2" := '';
-                      BlankVariant := false;
+                        Code := '';
+                        "Item No." := '';
+                        Description := 'Blank Variant';
+                        "Description 2" := '';
+                        BlankVariant := false;
                     end;
 
-                    Item.SetRange("Variant Filter",Code);
-                    Item.CalcFields("Sales (Qty.)","Sales (LCY)","COGS (LCY)");
+                    Item.SetRange("Variant Filter", Code);
+                    Item.CalcFields("Sales (Qty.)", "Sales (LCY)", "COGS (LCY)");
                     if (Item."Sales (Qty.)" = 0) and PrintOnlyIfSales then
-                      CurrReport.Skip;
+                        CurrReport.Skip;
                     Profit := Item."Sales (LCY)" - Item."COGS (LCY)";
                     if Item."Sales (LCY)" <> 0 then
-                      ItemProfitPct := ROUND(Profit / Item."Sales (LCY)" * 100,0.1)
+                        ItemProfitPct := ROUND(Profit / Item."Sales (LCY)" * 100, 0.1)
                     else
-                      ItemProfitPct := 0;
+                        ItemProfitPct := 0;
                     QuantityReturned := 0;
-                    ItemLedgerEntry.SetRange("Item No.",Item."No.");
-                    ItemLedgerEntry.SetRange("Variant Code",Code);
+                    ItemLedgerEntry.SetRange("Item No.", Item."No.");
+                    ItemLedgerEntry.SetRange("Variant Code", Code);
                     if ItemLedgerEntry.Find('-') then
-                      repeat
-                        if ItemLedgerEntry."Invoiced Quantity" > 0 then begin
-                          QuantityReturned := QuantityReturned + ItemLedgerEntry."Invoiced Quantity";
-                          Item."Sales (Qty.)" := Item."Sales (Qty.)" + ItemLedgerEntry."Invoiced Quantity";
-                        end;
-                      until ItemLedgerEntry.Next = 0;
+                        repeat
+                            if ItemLedgerEntry."Invoiced Quantity" > 0 then begin
+                                QuantityReturned := QuantityReturned + ItemLedgerEntry."Invoiced Quantity";
+                                Item."Sales (Qty.)" := Item."Sales (Qty.)" + ItemLedgerEntry."Invoiced Quantity";
+                            end;
+                        until ItemLedgerEntry.Next = 0;
                     if (Item."Sales (Qty.)" = 0) and (QuantityReturned = 0) and
                        (Item."Sales (LCY)" = 0) and (Item."COGS (LCY)" = 0)
                     then
-                      CurrReport.Skip;
+                        CurrReport.Skip;
                 end;
 
                 trigger OnPreDataItem()
                 begin
                     if not BreakdownByVariant then
-                      CurrReport.Break;
+                        CurrReport.Break;
                     if not AnyVariants then
-                      CurrReport.Break;
+                        CurrReport.Break;
 
                     BlankVariant := true;
-                    CurrReport.CreateTotals(Item."Sales (Qty.)",Item."Sales (LCY)",Item."COGS (LCY)",
-                      Profit,QuantityReturned);
+                    // CurrReport.CreateTotals(Item."Sales (Qty.)", Item."Sales (LCY)", Item."COGS (LCY)",
+                    //   Profit, QuantityReturned);
                 end;
             }
 
@@ -338,10 +335,10 @@ Report 50031 "ANICA Item Sales Statistics"
             begin
                 NoShow := false;
                 if BreakdownByVariant then begin
-                  NoVariant := Text002;
-                  if AnyVariants then
-                    NoShow := true;
-                  // EXIT;
+                    NoVariant := Text002;
+                    if AnyVariants then
+                        NoShow := true;
+                    // EXIT;
                 end;
 
                 //<ANICA LCC 10-21-16 Skip Items if Not selected on request Page
@@ -352,41 +349,40 @@ Report 50031 "ANICA Item Sales Statistics"
                 //ANICA Added Drop Ship Indicator to report
                 if Item."Drop Ship Item" then PrintDropShip := 'X' else PrintDropShip := ' ';
 
-                ItemUOM.SetCurrentkey(ItemUOM."Item No.",ItemUOM.Code);
-                ItemUOM.SetRange(ItemUOM."Item No.",Item."No.");
-                ItemUOM.SetRange(ItemUOM.Code,Item."Base Unit of Measure");
-                if ItemUOM.Find('-') then
-                begin
-                VPack := ItemUOM.Pack;
-                VPackDesc := ItemUOM."Pack Description";
-                //MESSAGE('Pack desc %1',ItemUOM.Code);
+                ItemUOM.SetCurrentkey(ItemUOM."Item No.", ItemUOM.Code);
+                ItemUOM.SetRange(ItemUOM."Item No.", Item."No.");
+                ItemUOM.SetRange(ItemUOM.Code, Item."Base Unit of Measure");
+                if ItemUOM.Find('-') then begin
+                    VPack := ItemUOM.Pack;
+                    VPackDesc := ItemUOM."Pack Description";
+                    //MESSAGE('Pack desc %1',ItemUOM.Code);
                 end;
                 ItemUPC.SetCurrentkey(ItemUPC."Item No.");
-                ItemUPC.SetRange(ItemUPC."Item No.",Item."No.");
+                ItemUPC.SetRange(ItemUPC."Item No.", Item."No.");
                 if ItemUPC.Find('-') then VUPC := ItemUPC.UPC;
 
                 //SETRANGE("Variant Filter");
-                CalcFields("Sales (Qty.)","Sales (LCY)","COGS (LCY)");
+                CalcFields("Sales (Qty.)", "Sales (LCY)", "COGS (LCY)");
                 if ("Sales (Qty.)" = 0) and PrintOnlyIfSales then
-                  CurrReport.Skip;
+                    CurrReport.Skip;
                 Profit := "Sales (LCY)" - "COGS (LCY)";
                 if "Sales (LCY)" <> 0 then
-                  ItemProfitPct := ROUND(Profit / "Sales (LCY)" * 100,0.1)
+                    ItemProfitPct := ROUND(Profit / "Sales (LCY)" * 100, 0.1)
                 else
-                  ItemProfitPct := 0;
+                    ItemProfitPct := 0;
                 QuantityReturned := 0;
                 //<ANICA LCC 10-26-15 Add Key
-                ItemLedgerEntry.SetCurrentkey("Item No.","Variant Code","Location Code","Posting Date");
+                ItemLedgerEntry.SetCurrentkey("Item No.", "Variant Code", "Location Code", "Posting Date");
                 //>ANICA
-                ItemLedgerEntry.SetRange("Item No.","No.");
+                ItemLedgerEntry.SetRange("Item No.", "No.");
                 //ItemLedgerEntry.SETRANGE("Variant Code");
                 if ItemLedgerEntry.Find('-') then
-                  repeat
-                    if ItemLedgerEntry."Invoiced Quantity" > 0 then begin
-                      QuantityReturned := QuantityReturned + ItemLedgerEntry."Invoiced Quantity";
-                      "Sales (Qty.)" := "Sales (Qty.)" + ItemLedgerEntry."Invoiced Quantity";
-                    end;
-                  until ItemLedgerEntry.Next = 0;
+                    repeat
+                        if ItemLedgerEntry."Invoiced Quantity" > 0 then begin
+                            QuantityReturned := QuantityReturned + ItemLedgerEntry."Invoiced Quantity";
+                            "Sales (Qty.)" := "Sales (Qty.)" + ItemLedgerEntry."Invoiced Quantity";
+                        end;
+                    until ItemLedgerEntry.Next = 0;
 
                 //<ANICA LCC 10-21-16 Skip Items if Not selected on request Page
                 if SelectDShipUnder0 then if ItemProfitPct = 0 then NoShow := true;
@@ -398,40 +394,40 @@ Report 50031 "ANICA Item Sales Statistics"
 
             trigger OnPreDataItem()
             begin
-                CurrReport.CreateTotals("Sales (Qty.)","Sales (LCY)","COGS (LCY)",
-                  Profit,QuantityReturned);
-                ItemLedgerEntry.SetCurrentkey("Entry Type","Item No.");
-                ItemLedgerEntry.SetRange("Entry Type",ItemLedgerEntry."entry type"::Sale);
-                Copyfilter("Date Filter",ItemLedgerEntry."Posting Date");
-                Copyfilter("Global Dimension 1 Filter",ItemLedgerEntry."Global Dimension 1 Code");
-                Copyfilter("Global Dimension 2 Filter",ItemLedgerEntry."Global Dimension 2 Code");
-                Copyfilter("Location Filter",ItemLedgerEntry."Location Code");
+                // CurrReport.CreateTotals("Sales (Qty.)", "Sales (LCY)", "COGS (LCY)",
+                //   Profit, QuantityReturned);
+                ItemLedgerEntry.SetCurrentkey("Entry Type", "Item No.");
+                ItemLedgerEntry.SetRange("Entry Type", ItemLedgerEntry."entry type"::Sale);
+                Copyfilter("Date Filter", ItemLedgerEntry."Posting Date");
+                Copyfilter("Global Dimension 1 Filter", ItemLedgerEntry."Global Dimension 1 Code");
+                Copyfilter("Global Dimension 2 Filter", ItemLedgerEntry."Global Dimension 2 Code");
+                Copyfilter("Location Filter", ItemLedgerEntry."Location Code");
 
-                if StrPos(CurrentKey,FieldCaption("Inventory Posting Group")) = 1 then begin
-                  if not ItemPostingGr.Get("Inventory Posting Group") then
-                    ItemPostingGr.Init;
-                  TLGroup := true;
-                  GroupField := 2;
-                  GroupName := ItemPostingGr.TableCaption;
-                  GroupNo := "Inventory Posting Group";
-                  GroupDesc := ItemPostingGr.Description;
+                if StrPos(CurrentKey, FieldCaption("Inventory Posting Group")) = 1 then begin
+                    if not ItemPostingGr.Get("Inventory Posting Group") then
+                        ItemPostingGr.Init;
+                    TLGroup := true;
+                    GroupField := 2;
+                    GroupName := ItemPostingGr.TableCaption;
+                    GroupNo := "Inventory Posting Group";
+                    GroupDesc := ItemPostingGr.Description;
                 end;
-                if StrPos(CurrentKey,FieldCaption("Vendor No.")) = 1 then begin
-                  if not Vendor.Get("Vendor No.") then
-                    Vendor.Init;
-                  TLGroup := true;
-                  GroupField := 3;
-                  GroupName := Vendor.TableCaption;
-                  GroupNo := "Vendor No.";
-                  GroupDesc := Vendor.Name;
+                if StrPos(CurrentKey, FieldCaption("Vendor No.")) = 1 then begin
+                    if not Vendor.Get("Vendor No.") then
+                        Vendor.Init;
+                    TLGroup := true;
+                    GroupField := 3;
+                    GroupName := Vendor.TableCaption;
+                    GroupNo := "Vendor No.";
+                    GroupDesc := Vendor.Name;
                 end;
-                if  (StrPos(CurrentKey,FieldCaption("Inventory Posting Group")) = 0) and
-                   (StrPos(CurrentKey,FieldCaption("Vendor No.")) = 0)
+                if (StrPos(CurrentKey, FieldCaption("Inventory Posting Group")) = 0) and
+                   (StrPos(CurrentKey, FieldCaption("Vendor No.")) = 0)
                 then begin
-                  TLGroup := false;
-                  GroupName := '';
-                  GroupNo := '';
-                  GroupDesc := '';
+                    TLGroup := false;
+                    GroupName := '';
+                    GroupNo := '';
+                    GroupDesc := '';
                 end;
 
                 VUPC := '';
@@ -450,27 +446,27 @@ Report 50031 "ANICA Item Sales Statistics"
                 group(Options)
                 {
                     Caption = 'Options';
-                    field(SelectDShipUnder0;SelectDShipUnder0)
+                    field(SelectDShipUnder0; SelectDShipUnder0)
                     {
                         ApplicationArea = Basic;
                         Caption = 'Drop Ship Items with Profit Not = Zero';
                     }
-                    field(SelectInvUnder0Over50;SelectInvUnder0Over50)
+                    field(SelectInvUnder0Over50; SelectInvUnder0Over50)
                     {
                         ApplicationArea = Basic;
                         Caption = 'Inventory Items Over 50% Profit or a Loss';
                     }
-                    field(PrintOnlyIfSales;PrintOnlyIfSales)
+                    field(PrintOnlyIfSales; PrintOnlyIfSales)
                     {
                         ApplicationArea = Basic;
                         Caption = 'Only Items with Sales';
                     }
-                    field(IncludeItemDescriptions;IncludeItemDescriptions)
+                    field(IncludeItemDescriptions; IncludeItemDescriptions)
                     {
                         ApplicationArea = Basic;
                         Caption = 'Include Item Descriptions';
                     }
-                    field(BreakdownByVariant;BreakdownByVariant)
+                    field(BreakdownByVariant; BreakdownByVariant)
                     {
                         ApplicationArea = Basic;
                         Caption = 'Breakdown By Variant';
@@ -497,17 +493,17 @@ Report 50031 "ANICA Item Sales Statistics"
     begin
         Title := Text000;
         if BreakdownByVariant then
-          Title := Title + ' - ' + Text001;
+            Title := Title + ' - ' + Text001;
 
         VSpace := ' ';
         VZero := '0';
         TDate := Today;
-        VDay := Date2dmy(TDate,1);
-        VMonth := Date2dmy(TDate,2);
-        VYear := Date2dmy(TDate,3);
-        VTextDay := Format(VDay,2,'<Integer>');
-        VTextMonth := Format(VMonth,2,'<Integer>');
-        VTextYear := Format(VYear,4,'<Integer>');
+        VDay := Date2dmy(TDate, 1);
+        VMonth := Date2dmy(TDate, 2);
+        VYear := Date2dmy(TDate, 3);
+        VTextDay := Format(VDay, 2, '<Integer>');
+        VTextMonth := Format(VMonth, 2, '<Integer>');
+        VTextYear := Format(VYear, 4, '<Integer>');
         VTextDate := VTextMonth + VTextDay + VTextYear;
         VZeroDate := ConvertStr(VTextDate, VSpace, VZero);
 
@@ -516,7 +512,7 @@ Report 50031 "ANICA Item Sales Statistics"
         ItemFilter := Item.GetFilters;
         ItemDateFilterExsit := (Item.GetFilter("Date Filter") <> '');
 
-        VFileName := 'ItemSS'+ VZeroDate + '.txt';
+        VFileName := 'ItemSS' + VZeroDate + '.txt';
         VFullFileName := '\\filestore\Company\Item Sales Statistics\' + VFileName;
         VLineOutputFile.Create(VFullFileName);
         VLineOutputFile.TextMode(true);
@@ -597,17 +593,17 @@ Report 50031 "ANICA Item Sales Statistics"
     var
         ItemVariant: Record "Item Variant";
     begin
-        ItemVariant.SetRange("Item No.",Item."No.");
+        ItemVariant.SetRange("Item No.", Item."No.");
         exit(ItemVariant.FindFirst);
     end;
 
 
     procedure WriteLineRecord()
     begin
-        PUnitPrice := Format(Item."Unit Price",12,'<Integer><Decimal,3>');
-        PSalesQty := Format(Item."Sales (Qty.)",12,'<Integer><Decimal,3>');
-        PCOGS := Format(Item."COGS (LCY)",12,'<Integer><Decimal,3>');
-        PPack := Format(VPack,12,'<Integer><Decimal,3>');
+        PUnitPrice := Format(Item."Unit Price", 12, '<Integer><Decimal,3>');
+        PSalesQty := Format(Item."Sales (Qty.)", 12, '<Integer><Decimal,3>');
+        PCOGS := Format(Item."COGS (LCY)", 12, '<Integer><Decimal,3>');
+        PPack := Format(VPack, 12, '<Integer><Decimal,3>');
         VOutputFileLine := Item."No." + '~' + PUnitPrice + '~' + PSalesQty + '~' + PCOGS + '~' + Item."JBG Commodity Group" + '~' +
         Item.Description + '~' + PPack + '~' + VPackDesc + '~' + VUPC;
         VLineOutputFile.Write(VOutputFileLine);
