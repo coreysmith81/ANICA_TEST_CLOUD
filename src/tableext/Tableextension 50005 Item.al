@@ -66,11 +66,11 @@ tableextension 50005 Item extends Item
 
     keys
     {
-        key(Key20; "Vendor Item No.", "Vendor No.", "Created From Nonstock Item") { }
-        key(Key21; "Vendor UPC Code") { }
-        key(Key22; "JBG Commodity Group") { }
-        key(Key23; "Vendor Item No.", "Manufacturer Code") { }
-        key(Key24; "MSA Reporting") { }
+        key(Key50000; "Vendor Item No.", "Vendor No.", "Created From Nonstock Item") { }
+        key(Key50001; "Vendor UPC Code") { }
+        key(Key50003; "JBG Commodity Group") { }
+        key(Key50004; "Vendor Item No.", "Manufacturer Code") { }
+        key(Key50005; "MSA Reporting") { }
     }
 
     procedure UpdateFixedGPM(_ItemNo: Code[20]; StdFixedRetail: Decimal; StoreLandedCost: Decimal): Decimal

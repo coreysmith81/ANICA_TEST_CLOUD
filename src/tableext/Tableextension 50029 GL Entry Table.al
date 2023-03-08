@@ -4,7 +4,7 @@ tableextension 50029 "G/L Entry" extends "G/L Entry"
     keys
     {
 
-        key(Key15; "Posting Date", "G/L Account No.", Description)
+        key(Key50000; "Posting Date", "G/L Account No.", Description)
         {
         }
     }

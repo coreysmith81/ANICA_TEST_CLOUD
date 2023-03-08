@@ -42,6 +42,7 @@ tableextension 50002 Customer extends Customer
     keys
     {
         key(Key50000; "Credit Report") { }
+        key(Key50001; "Telxon Store Number") { }
     }
     var
         myInt: Integer;
